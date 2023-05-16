@@ -1,4 +1,4 @@
-var beginCourseName = '碳达峰碳中和实现的科技路径';
+var beginCourseName = '2023年卫生健康行业公需科目学习问答';
 //筛选出所有课程
 var array = $('.f14blue');
 var array2 = [];
