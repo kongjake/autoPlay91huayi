@@ -1,4 +1,4 @@
-var beginCourseName = '2023年卫生健康行业公需科目学习问答';
+var beginCourseName = '2024年公需科目学习问答';
 //筛选出所有课程
 var array = $('.f14blue');
 var array2 = [];
@@ -28,6 +28,7 @@ function set2interval(){
 	interval1 = setInterval(function(){
 		var skip = $(window.frames["myIframe"].document).find(".pv-ask-skip")[0];
 		if(skip){
+			console.log('【'+array2[beginIndex].innerText + '】跳过了一个弹窗答题');
 			skip.click();
 		}
 	},5 * 1000);
@@ -36,7 +37,7 @@ function set2interval(){
 	interval2 = setInterval(function(){
 		var jrks = $(window.frames["myIframe"].document).find("#jrks");
 		if(jrks && jrks.attr('disabled') != 'disabled'){
-			console.log(array2[beginIndex].innerText + '看完了');
+			console.log('【'+array2[beginIndex].innerText + '】看完了');
 			beginIndex ++ ;
 			playVedio();
 			
