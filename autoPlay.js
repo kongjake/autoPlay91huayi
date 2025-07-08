@@ -1,4 +1,4 @@
-var beginCourseName = '2024年公需科目学习问答';
+var beginCourseName = '2025年公需科目学习问答';
 //筛选出所有课程
 var array = $('.f14blue');
 var array2 = [];
