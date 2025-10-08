@@ -1,4 +1,4 @@
-var beginCourseName = '2025年公需科目学习问答';
+var beginCourseName = '2025年公需科目学习问答'.trim();
 //筛选出所有课程
 var array = $('.f14blue');
 var array2 = [];
@@ -19,39 +19,51 @@ for(;beginIndex<array2.length;beginIndex++){
         break;
     }
 }
-var interval1 =0;
-var interval2 =0;
+var interval1 = 0;
+var interval2 = 0;
+var interval3 = 0;
 
+function set3interval(){
+    //检测跳过答题
+    interval1 = setInterval(function(){
+        var skip = $(window.frames["myIframe"].document).find(".pv-ask-skip")[0];
+        if(skip){
+            console.log('【'+array2[beginIndex].innerText + '】跳过了一个弹窗答题');
+            skip.click();
+        }
+    },5 * 1000);
 
-function set2interval(){
-	//检测跳过答题
-	interval1 = setInterval(function(){
-		var skip = $(window.frames["myIframe"].document).find(".pv-ask-skip")[0];
-		if(skip){
-			console.log('【'+array2[beginIndex].innerText + '】跳过了一个弹窗答题');
-			skip.click();
-		}
-	},5 * 1000);
+    //检测是否播完
+    interval2 = setInterval(function(){
+        var jrks = $(window.frames["myIframe"].document).find("#jrks");
+        if(jrks && jrks.attr('disabled') != 'disabled'){
+            console.log('【'+array2[beginIndex].innerText + '】看完了');
+            beginIndex ++ ;
+            playVedio();
+        }
+    },10 * 1000);
 
-	//检测是否播完
-	interval2 = setInterval(function(){
-		var jrks = $(window.frames["myIframe"].document).find("#jrks");
-		if(jrks && jrks.attr('disabled') != 'disabled'){
-			console.log('【'+array2[beginIndex].innerText + '】看完了');
-			beginIndex ++ ;
-			playVedio();
-			
-		}
-	},10 * 1000);
+    //检测并自动关闭温馨提示
+    interval3 = setInterval(function(){
+        var studyDialog = $(window.frames["myIframe"].document).find(".study_diaog");
+        if(studyDialog.length > 0){
+            var confirmBtn = studyDialog.find(".btn_sign");
+            if(confirmBtn.length > 0){
+                console.log('【'+array2[beginIndex].innerText + '】自动关闭了温馨提示');
+                confirmBtn.click();
+            }
+        }
+    },5 * 1000);
 }
 
 function playVedio(){
-	clearInterval(interval1);
-	clearInterval(interval2);
-	set2interval();
-	array2[beginIndex].target='myIframe';
-	array2[beginIndex].click();
-	console.log('正在观看【'+array2[beginIndex].innerText+'】，进度'+beginIndex+'/'+(array2.length-1));
+    clearInterval(interval1);
+    clearInterval(interval2);
+    clearInterval(interval3);
+    set3interval();
+    array2[beginIndex].target='myIframe';
+    array2[beginIndex].click();
+    console.log('正在观看【'+array2[beginIndex].innerText+'】，进度'+beginIndex+'/'+(array2.length-1));
 }
 
 playVedio();
